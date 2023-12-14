@@ -1,12 +1,3 @@
-interface KeyInt {
-  signature: number;
-}
-
-interface PersonInt {
-  key: KeyInt;
-  name: string;
-}
-
 class Key {
   private signature: string = Math.floor(Math.random() * 100001).toString();
 
@@ -33,9 +24,9 @@ abstract class House {
   constructor(protected key: Key) {}
   openDoor(person: Person): void {}
   comeIn(person: Person): void {}
-  resetKey(): void {}
   setNewKey(key: Key): void {}
   getTenants(): void {}
+  resetTenants(): void {}
 }
 
 class MyHouse extends House {

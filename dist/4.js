@@ -26,9 +26,9 @@ class House {
     }
     openDoor(person) { }
     comeIn(person) { }
-    resetKey() { }
     setNewKey(key) { }
     getTenants() { }
+    resetTenants() { }
 }
 class MyHouse extends House {
     openDoor(person) {
