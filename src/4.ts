@@ -104,32 +104,44 @@ const myHouse = new MyHouse(key);
 console.log(myHouse);
 
 // create new person with first key and name
-const person: Person = new Person(key, "John");
-console.log(person);
+const johnMerel: Person = new Person(key, "John");
+console.log(johnMerel);
 
 // try one the door
-myHouse.openDoor(person);
+myHouse.openDoor(johnMerel);
 
 // try come in
-myHouse.comeIn(person);
+myHouse.comeIn(johnMerel);
 console.log(myHouse);
 
 // create secont key
 const key1: Key = new Key();
 
 // create new person with first key and name
-const person1 = new Person(key1, "Sara");
+const saraLomes = new Person(key1, "Sara");
 
 // update key in myHouse
 myHouse.setNewKey(key1);
 
 // try one the door
-myHouse.openDoor(person1);
+myHouse.openDoor(saraLomes);
 
 // try come in
-myHouse.comeIn(person1);
+myHouse.comeIn(saraLomes);
 console.log(myHouse);
 
 // reset tenants
 myHouse.resetTenants();
+console.log(myHouse);
+
+// try to come in with old key
+myHouse.openDoor(johnMerel);
+console.log(myHouse);
+
+// open door with the last key
+myHouse.openDoor(saraLomes);
+
+// try come in
+myHouse.comeIn(saraLomes);
+
 console.log(myHouse);
