@@ -1,6 +1,6 @@
 class Key {
     constructor() {
-        this.signature = Math.floor(Math.random() * 100001);
+        this.signature = Math.floor(Math.random() * 100001).toString();
     }
     getSignature() {
         return this.signature;
@@ -11,60 +11,97 @@ class Person {
         this.key = key;
         this.name = name;
     }
+    getPersonName() {
+        return this.name;
+    }
+    getKey() {
+        return this.key.getSignature();
+    }
 }
-// interface HouseInt {
-//   door: boolean;
-//   tenants: PersonInt[];
-//   comeIn(person: PersonInt): void;
-//   openDoor(key: number): void;
-// }
 class House {
     constructor(key) {
         this.key = key;
-        this.door = false;
+        this.isDoorOper = false;
         this.tenants = [];
     }
+    openDoor(person) { }
     comeIn(person) { }
-    openDoor(key) { }
-    changeKey(newKey) { }
+    resetKey() { }
+    setNewKey(key) { }
+    getTenants() { }
 }
 class MyHouse extends House {
-    openDoor(key) {
-        if (key !== this.key.signature) {
+    openDoor(person) {
+        // get personal key from person
+        const personKey = person.getKey();
+        // check empty key
+        if (personKey === "") {
+            console.log("An invalid signature was entered.");
+            console.log("Check that the key is entered correctly!");
+            return;
+        }
+        // check wrong key
+        if (personKey !== this.key.getSignature()) {
             console.log("Error, the key does not match, the door is close.");
             return;
         }
         console.log("Successful door opening.");
-        this.door = true;
+        this.isDoorOper = true;
     }
     comeIn(person) {
-        if (!this.door) {
+        if (!this.isDoorOper) {
             console.log("Error, you cannot enter a closed door.");
             return;
         }
-        console.log("Successful added to tenants.");
+        // add person to tenants
         this.tenants.push(person);
-        this.door = false;
+        console.log("Successful added to tenants.");
+        // close the door
+        this.isDoorOper = false;
+    }
+    setNewKey(newKey) {
+        // set new key for open the door
+        this.key = newKey;
     }
     getTenants() {
+        if (!this.tenants) {
+            console.log("No tenants.");
+            return;
+        }
+        // return array with all tanants
         return this.tenants;
     }
-    changeKey(newKey) {
-        console.log(this.key.signature);
-        console.log(newKey);
-        this.key.signature = newKey;
+    resetTenants() {
+        // reset tenants array
+        this.tenants = [];
     }
 }
+// create first key
 const key = new Key();
+console.log(key);
+// initialize key in myHouse
 const myHouse = new MyHouse(key);
 console.log(myHouse);
+// create new person with first key and name
 const person = new Person(key, "John");
-myHouse.openDoor(person.key.getSignature());
+console.log(person);
+// try one the door
+myHouse.openDoor(person);
+// try come in
 myHouse.comeIn(person);
 console.log(myHouse);
-// const key1: KeyInt = new Key();
-// myHouse.changeKey(key1.getSignature());
-// console.log(myHouse);
-// const person1: PersonInt = new Person(key1, "Sara");
-// myHouse.comeIn(person1);
+// create secont key
+const key1 = new Key();
+// create new person with first key and name
+const person1 = new Person(key1, "Sara");
+// update key in myHouse
+myHouse.setNewKey(key1);
+// try one the door
+myHouse.openDoor(person1);
+// try come in
+myHouse.comeIn(person1);
+console.log(myHouse);
+// reset tenants
+myHouse.resetTenants();
+console.log(myHouse);
 //# sourceMappingURL=4.js.map
