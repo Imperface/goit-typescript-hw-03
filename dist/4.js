@@ -15,7 +15,7 @@ class Person {
         return this.name;
     }
     getKey() {
-        return this.key.getSignature();
+        return this.key;
     }
 }
 class House {
@@ -24,29 +24,18 @@ class House {
         this.isDoorOper = false;
         this.tenants = [];
     }
-    openDoor(person) { }
-    comeIn(person) { }
-    setNewKey(key) { }
-    getTenants() { }
-    resetTenants() { }
-}
-class MyHouse extends House {
     openDoor(person) {
-        // get personal key from person
         const personKey = person.getKey();
-        // check empty key
-        if (personKey === "") {
-            console.log("An invalid signature was entered.");
-            console.log("Check that the key is entered correctly!");
-            return;
-        }
         // check wrong key
-        if (personKey !== this.key.getSignature()) {
+        if (personKey.getSignature() !== this.key.getSignature()) {
             console.log("Error, the key does not match, the door is close.");
             return;
         }
         console.log("Successful door opening.");
         this.isDoorOper = true;
+    }
+    blockDoor() {
+        this.isDoorOper = false;
     }
     comeIn(person) {
         if (!this.isDoorOper) {
@@ -57,8 +46,13 @@ class MyHouse extends House {
         this.tenants.push(person);
         console.log("Successful added to tenants.");
         // close the door
-        this.isDoorOper = false;
+        this.blockDoor();
     }
+    setNewKey(key) { }
+    getTenants() { }
+    resetTenants() { }
+}
+class MyHouse extends House {
     setNewKey(newKey) {
         // set new key for open the door
         this.key = newKey;

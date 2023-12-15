@@ -12,8 +12,8 @@ class Person {
   getPersonName(): string {
     return this.name;
   }
-  getKey(): string {
-    return this.key.getSignature();
+  getKey(): Key {
+    return this.key;
   }
 }
 
@@ -22,27 +22,10 @@ abstract class House {
   protected tenants: Person[] = [];
 
   constructor(protected key: Key) {}
-  openDoor(person: Person): void {}
-  comeIn(person: Person): void {}
-  setNewKey(key: Key): void {}
-  getTenants(): void {}
-  resetTenants(): void {}
-}
-
-class MyHouse extends House {
   openDoor(person: Person): void {
-    // get personal key from person
-    const personKey: string = person.getKey();
-
-    // check empty key
-    if (personKey === "") {
-      console.log("An invalid signature was entered.");
-      console.log("Check that the key is entered correctly!");
-      return;
-    }
-
+    const personKey: Key = person.getKey();
     // check wrong key
-    if (personKey !== this.key.getSignature()) {
+    if (personKey.getSignature() !== this.key.getSignature()) {
       console.log("Error, the key does not match, the door is close.");
       return;
     }
@@ -51,7 +34,11 @@ class MyHouse extends House {
     this.isDoorOper = true;
   }
 
-  comeIn(person: Person) {
+  blockDoor(): void {
+    this.isDoorOper = false;
+  }
+
+  comeIn(person: Person): void {
     if (!this.isDoorOper) {
       console.log("Error, you cannot enter a closed door.");
       return;
@@ -62,9 +49,14 @@ class MyHouse extends House {
     console.log("Successful added to tenants.");
 
     // close the door
-    this.isDoorOper = false;
+    this.blockDoor();
   }
+  setNewKey(key: Key): void {}
+  getTenants(): void {}
+  resetTenants(): void {}
+}
 
+class MyHouse extends House {
   setNewKey(newKey: Key): void {
     // set new key for open the door
     this.key = newKey;
