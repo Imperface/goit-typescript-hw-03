@@ -24,16 +24,6 @@ class House {
         this.isDoorOper = false;
         this.tenants = [];
     }
-    openDoor(person) {
-        const personKey = person.getKey();
-        // check wrong key
-        if (personKey.getSignature() !== this.key.getSignature()) {
-            console.log("Error, the key does not match, the door is close.");
-            return;
-        }
-        console.log("Successful door opening.");
-        this.isDoorOper = true;
-    }
     blockDoor() {
         this.isDoorOper = false;
     }
@@ -53,6 +43,16 @@ class House {
     resetTenants() { }
 }
 class MyHouse extends House {
+    openDoor(person) {
+        const personKey = person.getKey();
+        // check wrong key
+        if (personKey.getSignature() !== this.key.getSignature()) {
+            console.log("Error, the key does not match, the door is close.");
+            return;
+        }
+        console.log("Successful door opening.");
+        this.isDoorOper = true;
+    }
     setNewKey(newKey) {
         // set new key for open the door
         this.key = newKey;

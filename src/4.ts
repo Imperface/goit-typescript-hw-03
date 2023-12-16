@@ -22,17 +22,8 @@ abstract class House {
   protected tenants: Person[] = [];
 
   constructor(protected key: Key) {}
-  openDoor(person: Person): void {
-    const personKey: Key = person.getKey();
-    // check wrong key
-    if (personKey.getSignature() !== this.key.getSignature()) {
-      console.log("Error, the key does not match, the door is close.");
-      return;
-    }
 
-    console.log("Successful door opening.");
-    this.isDoorOper = true;
-  }
+  abstract openDoor(person: Person): void;
 
   blockDoor(): void {
     this.isDoorOper = false;
@@ -57,6 +48,18 @@ abstract class House {
 }
 
 class MyHouse extends House {
+  openDoor(person: Person): void {
+    const personKey: Key = person.getKey();
+    // check wrong key
+    if (personKey.getSignature() !== this.key.getSignature()) {
+      console.log("Error, the key does not match, the door is close.");
+      return;
+    }
+
+    console.log("Successful door opening.");
+    this.isDoorOper = true;
+  }
+
   setNewKey(newKey: Key): void {
     // set new key for open the door
     this.key = newKey;
